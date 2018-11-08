@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import IssueCard from "./IssueCard";
 
@@ -15,18 +14,9 @@ export default function IssuesList(props) {
 
     return (
         <div>
-            <TransitionGroup>
-                {props.issues && props.issues.map((issue) => (
-                    <CSSTransition
-                        key={issue.id}
-                        timeout={500}
-                        classNames="question-list"
-                    >
-                        <IssueCard issue={issue}/>
-                    </CSSTransition>
-                ))}
-
-            </TransitionGroup>
+            {props.issues && props.issues.map((issue) => (
+                <IssueCard issue={issue}/>
+            ))}
         </div>
     )
 }
