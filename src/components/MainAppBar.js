@@ -25,7 +25,7 @@ class MainAppBar extends PureComponent {
     {
         const {classes} = this.props;
         const githubLink = props => <a
-            href="https://github.com/bajcmartinez/github-contributor" {...props}>{props.children}</a>;
+            href={process.env.REACT_APP_REPO} {...props}>{props.children}</a>;
 
         return (
             <div className={classes.root}>

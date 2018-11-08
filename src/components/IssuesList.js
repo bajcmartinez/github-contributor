@@ -15,7 +15,7 @@ export default function IssuesList(props) {
     return (
         <div>
             {props.issues && props.issues.map((issue) => (
-                <IssueCard issue={issue}/>
+                <IssueCard key={issue.id} issue={issue}/>
             ))}
         </div>
     )

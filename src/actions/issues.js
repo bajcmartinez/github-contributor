@@ -1,6 +1,7 @@
 import * as githubAPI from '../api/github';
 export const FETCH_ISSUES = 'FETCH_ISSUES';
 export const RECEIVE_ISSUES = 'RECEIVE_ISSUES';
+export const RECEIVE_ISSUES_ERROR = 'RECEIVE_ISSUES_ERROR';
 
 export const fetchIssues = () => ({
     type: FETCH_ISSUES
@@ -11,9 +12,23 @@ export const receiveIssues = (payload) => ({
     payload
 });
 
+export const receiveIssuesError = (filters, error) => ({
+    type: RECEIVE_ISSUES_ERROR,
+    filters,
+    error
+});
+
 export const handleLoadIssues = () => (dispatch, getState) => {
     dispatch(fetchIssues());
-    return githubAPI.getIssues(getState().filters).then((response) => {
+    const { filters } = getState();
+    return githubAPI.getIssues(filters).then((response) => {
         dispatch(receiveIssues(response.data));
+    }).catch(error => {
+        console.log(
+            'Error querying GitHub',
+            filters,
+            error
+        );
+        dispatch(receiveIssuesError(filters, error.response ? error.response.data : error.message))
     });
 };
