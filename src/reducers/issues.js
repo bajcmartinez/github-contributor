@@ -1,11 +1,18 @@
-import { RECEIVE_ISSUES } from '../actions/issues'
+import {FETCH_ISSUES, RECEIVE_ISSUES} from '../actions/issues'
 
-export default function issues (state = {
+const defaultState = {
     loading: true,
     list: [],
     totalCount: 0
-}, action) {
+};
+
+export default function issues (state = defaultState, action) {
     switch (action.type) {
+        case FETCH_ISSUES:
+            return {
+                ...state,
+                loading: true
+            }
         case RECEIVE_ISSUES:
             return {
                 loading: false,

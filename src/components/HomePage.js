@@ -2,6 +2,7 @@ import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import ReactLoading from 'react-loading';
 
 import { handleLoadIssues } from "../actions/issues";
 import { selectLanguage, toggleLabel } from "../actions/filters";
@@ -29,6 +30,11 @@ const styles = theme => ({
     drawerPaper: {
         width: drawerWidth
     },
+
+    loading: {
+        display: 'flex',
+        justifyContent: 'center'
+    }
 });
 
 class Home extends Component {
@@ -56,7 +62,13 @@ class Home extends Component {
                     <MainAppBar />
                     <div className={classes.content}>
                         <HeroContent/>
-                        <IssuesList issues={this.props.issues} totalCount={this.props.totalCount} />
+                        {this.props.issues.loading ?
+                            <div className={classes.loading}>
+                                <ReactLoading type="bars" color="#000" />
+                            </div>
+                            :
+                            <IssuesList issues={this.props.issues.list} totalCount={this.props.issues.totalCount}/>
+                        }
                     </div>
                 </main>
             </Fragment>
@@ -68,6 +80,7 @@ function mapDispatchToProps (dispatch) {
     return {
         loadIssues: () => dispatch(handleLoadIssues({labels:['help-wanted']})),
         selectLanguage: (language) => {
+            console.log(language);
             dispatch(selectLanguage(language));
             dispatch(handleLoadIssues());
         },
@@ -80,8 +93,7 @@ function mapDispatchToProps (dispatch) {
 
 function mapStateToProps ({ issues, filters }) {
     return {
-        issues: issues.list,
-        totalCount: issues.totalCount,
+        issues,
         filters
     }
 }

@@ -1,5 +1,18 @@
 import axios from 'axios';
 
+export const labelsList = [
+    'help-wanted',
+    'first-timers-only',
+    'good-first-issue'
+];
+
+export const languagesList = [
+    'javascript',
+    'python',
+    'c#',
+    'html'
+];
+
 const formatIssueQueryParams = (filter, values) => {
     return (values.length ? ' ' : '')
         + values.map((value) => {
@@ -7,7 +20,7 @@ const formatIssueQueryParams = (filter, values) => {
                 + '"' + encodeURIComponent(value) + '"'
 
         }).join('+')
-}
+};
 
 const endpoints = {
     issues: ({labels, language}, sort) =>

@@ -4,12 +4,9 @@ import Select from 'react-select';
 import { withStyles } from '@material-ui/core/styles';
 import { Divider, List, ListItem, ListItemText, Typography, Checkbox } from '@material-ui/core/';
 
-const languages = [
-    'javascript',
-    'python',
-    'c#',
-    'html'
-].map(language => ({
+import { labelsList, languagesList } from "../api/github";
+
+const languages = languagesList.map(language => ({
     value: language,
     label: language,
 }));
@@ -46,7 +43,8 @@ class MainDrawer extends Component {
                     <Select
                         options={languages}
                         className={classes.select}
-                        onChange={(language) => selectLanguage(language.value)}
+                        onChange={(language) => selectLanguage(language ? language.value : null)}
+                        isClearable
                         placeholder="Filter by language"
                     />
                 </div>
@@ -55,7 +53,7 @@ class MainDrawer extends Component {
                 <div className={classes.section}>
                     <Typography variant="h6" className={classes.title}>Labels</Typography>
                     <List>
-                        {['help-wanted', 'first-timers-only', 'good-first-issue'].map((text) => (
+                        {labelsList.map((text) => (
                             <ListItem dense button key={text} onClick={() => toggleLabel(text)}>
                                 <Checkbox
                                     className={classes.checkbox}
