@@ -1,16 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Typography from "@material-ui/core/Typography/Typography";
+import {withStyles} from "@material-ui/core";
+import PropTypes from "prop-types";
 
-export default function NotFound() {
+const styles = theme => ({
+    heroContent: {
+        maxWidth: 600,
+        margin: '0 auto',
+        padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
+    },
+});
+
+function NotFound({classes}) {
     return (
-        <section className="jumbotron bg-white text-center">
-            <div className="container">
-                <h1 className="jumbotron-heading">404 - Page not found!</h1>
-                <p className="lead text-muted">The page you are looking for doesn't exist.</p>
-                <p>
-                    <Link to="/login" className="btn btn-primary my-2">Log in to start</Link>
-                </p>
-            </div>
-        </section>
+        <div className={classes.heroContent}>
+            <Typography variant="h2" align="center" color="textPrimary" gutterBottom>
+                404 - Page not found!
+            </Typography>
+            <Typography variant="h6" align="center" color="textSecondary" component="p">
+                he page you are looking for doesn't exist.
+            </Typography>
+        </div>
     )
 }
+
+NotFound.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(NotFound);
