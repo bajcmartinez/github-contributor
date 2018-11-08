@@ -7,14 +7,18 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
-const styles = {
+const styles = theme => ({
     root: {
-        flexGrow: 1,
+        flexGrow: 1
     },
     grow: {
         flexGrow: 1,
     },
-};
+    appBar: {
+        left: '240px',
+        width: 'auto'
+    }
+});
 
 function MainAppBar(props) {
     const { classes } = props;
@@ -22,7 +26,7 @@ function MainAppBar(props) {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static" color="default">
+            <AppBar position="fixed" className={classes.appBar} color="default">
                 <Toolbar>
                     <Typography variant="h6" color="inherit" className={classes.grow}>
                         Github Contributor

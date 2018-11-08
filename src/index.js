@@ -6,7 +6,6 @@ import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { blueGrey } from '@material-ui/core/colors'
 
 import App from './components/App';
-import MainAppBar from './components/MainAppBar';
 import middleware from './middleware';
 import reducer from './reducers';
 
@@ -24,7 +23,6 @@ const theme = createMuiTheme({
 ReactDOM.render(
     <Provider store={store}>
         <MuiThemeProvider theme={theme}>
-            <MainAppBar />
             <App />
         </MuiThemeProvider>
     </Provider>

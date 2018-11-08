@@ -10,14 +10,7 @@ import NotFound from './NotFound';
 
 const styles = theme => ({
    layout: {
-       width: 'auto',
-       marginLeft: theme.spacing.unit * 3,
-       marginRight: theme.spacing.unit * 3,
-       [theme.breakpoints.up(900 + theme.spacing.unit * 3 * 2)]: {
-           width: 900,
-           marginLeft: 'auto',
-           marginRight: 'auto',
-       },
+       display: 'flex',
    }
 });
 
@@ -28,14 +21,14 @@ class App extends Component {
         return (
             <Fragment>
                 <CssBaseline />
-                <main className={classes.layout}>
+                <div className={classes.layout}>
                     <Router>
                         <Switch>
                             <Route path='/' exact component={HomePage}/>
                             <Route component={NotFound}/>
                         </Switch>
                     </Router>
-                </main>
+                </div>
             </Fragment>
         );
     }
