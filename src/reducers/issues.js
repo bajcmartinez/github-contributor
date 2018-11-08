@@ -1,4 +1,4 @@
-import {FETCH_ISSUES, RECEIVE_ISSUES} from '../actions/issues'
+import {FETCH_ISSUES, RECEIVE_ISSUES} from '../actions/issues';
 
 const defaultState = {
     loading: true,

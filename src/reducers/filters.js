@@ -1,8 +1,9 @@
 import { TOGGLE_LABEL, SELECT_LANGUAGE } from '../actions/filters'
+import {labelsList} from '../api/github';
 
 const defaultFilters = {
     language: null,
-    labels: []
+    labels: [labelsList[0]]
 };
 
 export default function filters (state = defaultFilters, action) {
