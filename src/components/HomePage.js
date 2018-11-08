@@ -1,4 +1,5 @@
 import React, { Fragment, Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -97,5 +98,14 @@ function mapStateToProps ({ issues, filters }) {
         filters
     }
 }
+
+Home.propTypes = {
+    classes: PropTypes.object.isRequired,
+    filters: PropTypes.object.isRequired,
+    issues: PropTypes.object.isRequired,
+    loadIssues: PropTypes.func.isRequired,
+    selectLanguage: PropTypes.func.isRequired,
+    toggleLabel: PropTypes.func.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Home));

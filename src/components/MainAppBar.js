@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
-const styles = theme => ({
+const styles = () => ({
     root: {
         flexGrow: 1
     },

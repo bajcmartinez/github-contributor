@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react';
+import PropTypes from 'prop-types';
 import 'typeface-roboto';
 import {Switch, Route} from 'react-router';
 import {BrowserRouter as Router} from 'react-router-dom';
@@ -8,7 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import HomePage from './HomePage';
 import NotFound from './NotFound';
 
-const styles = theme => ({
+const styles = () => ({
    layout: {
        display: 'flex',
    }
@@ -33,5 +34,9 @@ class App extends Component {
         );
     }
 }
+
+App.propTypes = {
+    classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(App);

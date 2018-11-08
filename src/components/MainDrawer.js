@@ -71,4 +71,11 @@ class MainDrawer extends Component {
     }
 }
 
+MainDrawer.propTypes = {
+    classes: PropTypes.object.isRequired,
+    filters: PropTypes.object.isRequired,
+    selectLanguage: PropTypes.func.isRequired,
+    toggleLabel: PropTypes.func.isRequired
+};
+
 export default withStyles(styles)(MainDrawer);
