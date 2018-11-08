@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 export const labelsList = [
-    'help-wanted',
-    'first-timers-only',
-    'good-first-issue'
+    'help wanted',
+    'good first issue',
+    'bug',
+    'enhancement'
 ];
 
 export const languagesList = [
