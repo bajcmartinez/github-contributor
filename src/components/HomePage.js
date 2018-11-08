@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 
 import { handleLoadIssues } from "../actions/issues";
-import { selectLanguage } from "../actions/filters";
+import { selectLanguage, toggleLabel } from "../actions/filters";
 import HeroContent from './HeroContent';
 import IssuesList from './IssuesList';
 import MainAppBar from "./MainAppBar";
@@ -37,7 +37,7 @@ class Home extends Component {
     }
 
     render() {
-        const { classes, selectLanguage } = this.props;
+        const { classes, selectLanguage, toggleLabel, filters } = this.props;
 
         return (
             <Fragment>
@@ -49,7 +49,7 @@ class Home extends Component {
                             paper: classes.drawerPaper,
                         }}
                     >
-                        <MainDrawer selectLanguage={selectLanguage} />
+                        <MainDrawer selectLanguage={selectLanguage} toggleLabel={toggleLabel} filters={filters} />
                     </Drawer>
                 </nav>
                 <main className={classes.container}>
@@ -69,6 +69,10 @@ function mapDispatchToProps (dispatch) {
         loadIssues: () => dispatch(handleLoadIssues({labels:['help-wanted']})),
         selectLanguage: (language) => {
             dispatch(selectLanguage(language));
+            dispatch(handleLoadIssues());
+        },
+        toggleLabel: (label) => {
+            dispatch(toggleLabel(label));
             dispatch(handleLoadIssues());
         }
     }

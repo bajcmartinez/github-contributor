@@ -34,28 +34,8 @@ const styles = theme => ({
 });
 
 class MainDrawer extends Component {
-    state = {
-        checked: [],
-    };
-
-    handleLabelToggle = value => () => {
-        const { checked } = this.state;
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-
-        if (currentIndex === -1) {
-            newChecked.push(value);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
-
-        this.setState({
-            checked: newChecked,
-        });
-    };
-
     render() {
-        const { classes, selectLanguage } = this.props;
+        const { classes, selectLanguage, toggleLabel, filters } = this.props;
         return (
             <div>
                 <div className={classes.toolbar}/>
@@ -66,7 +46,6 @@ class MainDrawer extends Component {
                     <Select
                         options={languages}
                         className={classes.select}
-                        value={this.props.language}
                         onChange={(language) => selectLanguage(language.value)}
                         placeholder="Filter by language"
                     />
@@ -77,10 +56,10 @@ class MainDrawer extends Component {
                     <Typography variant="h6" className={classes.title}>Labels</Typography>
                     <List>
                         {['help-wanted', 'first-timers-only', 'good-first-issue'].map((text) => (
-                            <ListItem dense button key={text} onClick={this.handleLabelToggle(text)}>
+                            <ListItem dense button key={text} onClick={() => toggleLabel(text)}>
                                 <Checkbox
                                     className={classes.checkbox}
-                                    checked={this.state.checked.indexOf(text) !== -1}
+                                    checked={filters.labels.includes(text)}
                                     tabIndex={-1}
                                     disableRipple
                                 />
