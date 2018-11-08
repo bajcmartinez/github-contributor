@@ -36,7 +36,6 @@ const styles = theme => ({
 class MainDrawer extends Component {
     state = {
         checked: [],
-        language: null
     };
 
     handleLabelToggle = value => () => {
@@ -55,15 +54,8 @@ class MainDrawer extends Component {
         });
     };
 
-    handleLanguageChange = () => language => {
-        console.log(language);
-        this.setState({
-            language: language
-        })
-    };
-
     render() {
-        const { classes } = this.props;
+        const { classes, selectLanguage } = this.props;
         return (
             <div>
                 <div className={classes.toolbar}/>
@@ -74,8 +66,8 @@ class MainDrawer extends Component {
                     <Select
                         options={languages}
                         className={classes.select}
-                        value={this.state.language}
-                        onChange={this.handleLanguageChange()}
+                        value={this.props.language}
+                        onChange={(language) => selectLanguage(language.value)}
                         placeholder="Filter by language"
                     />
                 </div>

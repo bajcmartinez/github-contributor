@@ -1,6 +1,6 @@
 import { RECEIVE_ISSUES } from '../actions/issues'
 
-export default function loading (state = {
+export default function issues (state = {
     loading: true,
     list: [],
     totalCount: 0

@@ -10,11 +10,11 @@ const formatIssueQueryParams = (filter, values) => {
 }
 
 const endpoints = {
-    issues: ({labels}, sort) =>
-        `https://api.github.com/search/issues?q=is:issue is:open${formatIssueQueryParams('label', labels)}&sort=${sort.field}&order=${sort.order}`,
+    issues: ({labels, language}, sort) =>
+        `https://api.github.com/search/issues?q=is:issue is:open${formatIssueQueryParams('label', labels)}${language != null ? formatIssueQueryParams('language', [language]) : ''}&sort=${sort.field}&order=${sort.order}`,
 };
 
-export const getIssues = (query = {labels:['help-wanted']}, sort = {field: 'created', order: 'desc'}) => {
+export const getIssues = (query, sort = {field: 'created', order: 'desc'}) => {
     return axios.get(
         endpoints.issues(query, sort)
     );

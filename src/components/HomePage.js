@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 
 import { handleLoadIssues } from "../actions/issues";
+import { selectLanguage } from "../actions/filters";
 import HeroContent from './HeroContent';
 import IssuesList from './IssuesList';
 import MainAppBar from "./MainAppBar";
@@ -36,7 +37,7 @@ class Home extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, selectLanguage } = this.props;
 
         return (
             <Fragment>
@@ -48,7 +49,7 @@ class Home extends Component {
                             paper: classes.drawerPaper,
                         }}
                     >
-                        <MainDrawer />
+                        <MainDrawer selectLanguage={selectLanguage} />
                     </Drawer>
                 </nav>
                 <main className={classes.container}>
@@ -65,14 +66,19 @@ class Home extends Component {
 
 function mapDispatchToProps (dispatch) {
     return {
-        loadIssues: () => dispatch(handleLoadIssues())
+        loadIssues: () => dispatch(handleLoadIssues({labels:['help-wanted']})),
+        selectLanguage: (language) => {
+            dispatch(selectLanguage(language));
+            dispatch(handleLoadIssues());
+        }
     }
 }
 
-function mapStateToProps ({ issues }) {
+function mapStateToProps ({ issues, filters }) {
     return {
         issues: issues.list,
-        totalCount: issues.totalCount
+        totalCount: issues.totalCount,
+        filters
     }
 }
 

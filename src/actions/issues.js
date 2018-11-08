@@ -6,8 +6,8 @@ export const receiveIssues = (payload) => ({
     payload
 });
 
-export const handleLoadIssues = () => (dispatch) => {
-    return githubAPI.getIssues().then((response) => {
+export const handleLoadIssues = () => (dispatch, getState) => {
+    return githubAPI.getIssues(getState().filters).then((response) => {
         dispatch(receiveIssues(response.data));
     });
 };
