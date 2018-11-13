@@ -1,11 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Link }  from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import { AppBar, Toolbar, Typography, Button, SvgIcon } from '@material-ui/core';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import HomeIcon from '@material-ui/icons/Home';
 
 const styles = () => ({
     root: {
@@ -14,26 +13,39 @@ const styles = () => ({
     grow: {
         flexGrow: 1,
     },
-    appBar: {
+    appBarWithSideBar: {
         left: '240px',
         width: 'auto'
+    },
+    appBar: {
+        width: '100%'
     }
 });
 
 class MainAppBar extends PureComponent {
     render()
     {
-        const {classes} = this.props;
+        const {classes, title, sideBar} = this.props;
         const githubLink = props => <a
             href={process.env.REACT_APP_REPO} {...props}>{props.children}</a>;
 
         return (
             <div className={classes.root}>
-                <AppBar position="fixed" className={classes.appBar} color="default">
+                <AppBar position="fixed" className={sideBar ? classes.appBarWithSideBar : classes.appBar} color="default">
                     <Toolbar>
                         <Typography variant="h6" color="inherit" className={classes.grow}>
-                            Github Contributor - (Version: {process.env.REACT_APP_VERSION})
+                            {title}
                         </Typography>
+                        <Button to="/" component={Link}>
+                            <HomeIcon />
+                            &nbsp;
+                            Home
+                        </Button>
+                        <Button to="/favourites" component={Link}>
+                            <FavoriteIcon />
+                            &nbsp;
+                            Favourites
+                        </Button>
                         <Button aria-label="github" target="_blank" component={githubLink}>
                             <SvgIcon>
                                 <path
@@ -47,8 +59,13 @@ class MainAppBar extends PureComponent {
     }
 }
 
+MainAppBar.defaultProps = {
+    sideBar: false
+}
+
 MainAppBar.propTypes = {
     classes: PropTypes.object.isRequired,
+    sideBar: PropTypes.bool
 };
 
 export default withStyles(styles)(MainAppBar);

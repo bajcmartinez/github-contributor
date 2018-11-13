@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import HomePage from './HomePage';
+import FavouritesPage from './FavouritesPage';
 import NotFound from './NotFound';
 
 const styles = () => ({
@@ -26,6 +27,7 @@ class App extends Component {
                     <Router>
                         <Switch>
                             <Route path='/' exact component={HomePage}/>
+                            <Route path='/favourites' exact component={FavouritesPage}/>
                             <Route component={NotFound}/>
                         </Switch>
                     </Router>

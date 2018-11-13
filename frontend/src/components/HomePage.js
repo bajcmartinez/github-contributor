@@ -129,7 +129,7 @@ class Home extends Component {
                     </Drawer>
                 </nav>
                 <main className={classes.container}>
-                    <MainAppBar />
+                    <MainAppBar sideBar={true} title={`Github Contributor - (Version: ${process.env.REACT_APP_VERSION})`} />
                     <div className={classes.content}>
                         <HeroContent/>
                         {getContent()}
