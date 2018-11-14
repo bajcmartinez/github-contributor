@@ -80,7 +80,7 @@ class FavouritesPage extends Component {
         return (
             <Fragment>
                 <main className={classes.container}>
-                    <MainAppBar />
+                    <MainAppBar title="Favourites" />
                     <div className={classes.content}>
                         <HeroContent
                             title="Our Favourite Projects"
