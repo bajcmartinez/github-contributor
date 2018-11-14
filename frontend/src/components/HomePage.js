@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { Drawer, Card, CardContent, CardActions, Button, Typography } from '@material-ui/core';
+import { Drawer, Card, CardContent, CardActions, Button, Typography, Hidden } from '@material-ui/core';
 import { Star, Error } from '@material-ui/icons';
 import ReactLoading from 'react-loading';
 
@@ -25,8 +25,10 @@ const styles = theme => ({
     },
 
     drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
+        [theme.breakpoints.up('sm')]: {
+            width: drawerWidth,
+            flexShrink: 0,
+        }
     },
 
     drawerPaper: {
@@ -48,16 +50,39 @@ const styles = theme => ({
 
     errorText: {
         color: theme.palette.error.contrastText
-    }
+    },
+
+    sectionDesktop: {
+        display: 'none',
+        [theme.breakpoints.up('md')]: {
+            display: 'flex',
+        },
+    },
+    sectionMobile: {
+        display: 'flex',
+        [theme.breakpoints.up('md')]: {
+            display: 'none',
+        },
+    },
 });
 
 class Home extends Component {
+    state = {
+        mobileOpen: false,
+    };
+
     componentDidMount() {
         this.props.loadIssues();
     }
 
+    handleDrawerToggle = () => {
+        console.log('handleDrawerToggle');
+        this.setState(state => ({ mobileOpen: !state.mobileOpen }));
+    };
+
     render() {
         const { classes, selectLanguage, toggleLabel, filters, issues } = this.props;
+        console.log('open', this.state.mobileOpen);
 
         function getContent() {
             if (issues.loading) {
@@ -118,18 +143,32 @@ class Home extends Component {
         return (
             <Fragment>
                 <nav className={classes.drawer}>
-                    <Drawer
-                        variant="permanent"
-                        open
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                    >
-                        <MainDrawer selectLanguage={selectLanguage} toggleLabel={toggleLabel} filters={filters} />
-                    </Drawer>
+                    <Hidden mdUp implementation="css">
+                        <Drawer
+                            variant="temporary"
+                            open={this.state.mobileOpen}
+                            onClose={this.handleDrawerToggle}
+                            classes={{
+                                paper: classes.drawerPaper,
+                            }}
+                        >
+                            <MainDrawer selectLanguage={selectLanguage} toggleLabel={toggleLabel} filters={filters} />
+                        </Drawer>
+                    </Hidden>
+                    <Hidden smDown implementation="css">
+                        <Drawer
+                            variant="permanent"
+                            open
+                            classes={{
+                                paper: classes.drawerPaper,
+                            }}
+                        >
+                            <MainDrawer selectLanguage={selectLanguage} toggleLabel={toggleLabel} filters={filters} />
+                        </Drawer>
+                    </Hidden>
                 </nav>
                 <main className={classes.container}>
-                    <MainAppBar sideBar={true} title={`Github Contributor - (Version: ${process.env.REACT_APP_VERSION})`} />
+                    <MainAppBar handleDrawerToggle={this.handleDrawerToggle} sideBar={true} title={`Github Contributor - (Version: ${process.env.REACT_APP_VERSION})`} />
                     <div className={classes.content}>
                         <HeroContent/>
                         {getContent()}

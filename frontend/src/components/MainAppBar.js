@@ -6,6 +6,7 @@ import { AppBar, Toolbar, Typography, Button, SvgIcon, Menu, MenuItem, IconButto
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import HomeIcon from '@material-ui/icons/Home';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const styles = (theme) => ({
     root: {
@@ -15,8 +16,13 @@ const styles = (theme) => ({
         flexGrow: 1,
     },
     appBarWithSideBar: {
-        left: '240px',
-        width: 'auto'
+        [theme.breakpoints.up('md')]: {
+            left: '240px',
+            width: 'auto'
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: '100%'
+        }
     },
     appBar: {
         width: '100%'
@@ -29,6 +35,12 @@ const styles = (theme) => ({
     },
     sectionMobile: {
         display: 'flex',
+        [theme.breakpoints.up('md')]: {
+            display: 'none',
+        },
+    },
+    menuButton: {
+        marginRight: 20,
         [theme.breakpoints.up('md')]: {
             display: 'none',
         },
@@ -50,7 +62,7 @@ class MainAppBar extends PureComponent {
 
     render()
     {
-        const {classes, title, sideBar} = this.props;
+        const {classes, title, sideBar,handleDrawerToggle} = this.props;
         const { mobileMoreAnchorEl } = this.state;
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -96,6 +108,15 @@ class MainAppBar extends PureComponent {
             <div className={classes.root}>
                 <AppBar position="fixed" className={sideBar ? classes.appBarWithSideBar : classes.appBar} color="default">
                     <Toolbar>
+                        {sideBar && <IconButton
+                            color="inherit"
+                            aria-label="Open drawer"
+                            onClick={handleDrawerToggle}
+                            className={classes.menuButton}
+                        >
+                                <MenuIcon />
+                        </IconButton>
+                        }
                         <Typography variant="h6" color="inherit" className={classes.grow}>
                             {title}
                         </Typography>
@@ -137,7 +158,8 @@ MainAppBar.defaultProps = {
 
 MainAppBar.propTypes = {
     classes: PropTypes.object.isRequired,
-    sideBar: PropTypes.bool
+    sideBar: PropTypes.bool,
+    handleDrawerToggle: PropTypes.func
 };
 
 export default withStyles(styles)(MainAppBar);
