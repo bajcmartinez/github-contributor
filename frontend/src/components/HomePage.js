@@ -7,7 +7,7 @@ import { Star, Error } from '@material-ui/icons';
 import ReactLoading from 'react-loading';
 
 import { handleLoadIssues } from "../actions/issues";
-import { selectLanguage, toggleLabel } from "../actions/filters";
+import { selectLanguage, toggleLabel, selectSort } from "../actions/filters";
 import HeroContent from './HeroContent';
 import IssuesList from './IssuesList';
 import MainAppBar from "./MainAppBar";
@@ -76,13 +76,11 @@ class Home extends Component {
     }
 
     handleDrawerToggle = () => {
-        console.log('handleDrawerToggle');
         this.setState(state => ({ mobileOpen: !state.mobileOpen }));
     };
 
     render() {
-        const { classes, selectLanguage, toggleLabel, filters, issues } = this.props;
-        console.log('open', this.state.mobileOpen);
+        const { classes, selectLanguage, selectSort, toggleLabel, filters, issues } = this.props;
 
         function getContent() {
             if (issues.loading) {
@@ -152,7 +150,7 @@ class Home extends Component {
                                 paper: classes.drawerPaper,
                             }}
                         >
-                            <MainDrawer selectLanguage={selectLanguage} toggleLabel={toggleLabel} filters={filters} />
+                            <MainDrawer selectLanguage={selectLanguage} selectSort={selectSort} toggleLabel={toggleLabel} filters={filters} />
                         </Drawer>
                     </Hidden>
                     <Hidden smDown implementation="css">
@@ -163,7 +161,7 @@ class Home extends Component {
                                 paper: classes.drawerPaper,
                             }}
                         >
-                            <MainDrawer selectLanguage={selectLanguage} toggleLabel={toggleLabel} filters={filters} />
+                            <MainDrawer selectLanguage={selectLanguage} selectSort={selectSort} toggleLabel={toggleLabel} filters={filters} />
                         </Drawer>
                     </Hidden>
                 </nav>
@@ -183,12 +181,15 @@ function mapDispatchToProps (dispatch) {
     return {
         loadIssues: () => dispatch(handleLoadIssues({labels:['help-wanted']})),
         selectLanguage: (language) => {
-            console.log(language);
             dispatch(selectLanguage(language));
             dispatch(handleLoadIssues());
         },
         toggleLabel: (label) => {
             dispatch(toggleLabel(label));
+            dispatch(handleLoadIssues());
+        },
+        selectSort: (field, order) => {
+            dispatch(selectSort(field, order));
             dispatch(handleLoadIssues());
         }
     }
@@ -207,6 +208,7 @@ Home.propTypes = {
     issues: PropTypes.object.isRequired,
     loadIssues: PropTypes.func.isRequired,
     selectLanguage: PropTypes.func.isRequired,
+    selectSort: PropTypes.func.isRequired,
     toggleLabel: PropTypes.func.isRequired
 };
 

@@ -21,7 +21,9 @@ export const receiveIssuesError = (filters, error) => ({
 export const handleLoadIssues = () => (dispatch, getState) => {
     dispatch(fetchIssues());
     const { filters } = getState();
-    return githubAPI.getIssues(filters).then((response) => {
+    const { sort, ...onlyFilters } = filters;
+    console.log(sort, onlyFilters);
+    return githubAPI.getIssues(onlyFilters, sort).then((response) => {
         dispatch(receiveIssues(response.data));
     }).catch(error => {
         console.log(

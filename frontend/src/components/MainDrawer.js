@@ -4,7 +4,12 @@ import Select from 'react-select';
 import { withStyles } from '@material-ui/core/styles';
 import { Divider, List, ListItem, ListItemText, Typography, Checkbox } from '@material-ui/core/';
 
-import { labelsList, languagesList } from "../api/github";
+import { labelsList, sortList, languagesList } from "../api/github";
+
+const sorts = sortList.map((sort, index) => ({
+    value: index,
+    label: sort.label,
+}));
 
 const languages = languagesList.map(language => ({
     value: language,
@@ -32,7 +37,7 @@ const styles = theme => ({
 
 class MainDrawer extends Component {
     render() {
-        const { classes, selectLanguage, toggleLabel, filters } = this.props;
+        const { classes, selectLanguage, selectSort, toggleLabel, filters } = this.props;
         return (
             <div>
                 <div className={classes.toolbar}/>
@@ -66,6 +71,18 @@ class MainDrawer extends Component {
                         ))}
                     </List>
                 </div>
+                <Divider/>
+
+                <div className={classes.section}>
+                    <Typography variant="h6" className={classes.title}>Sort</Typography>
+                    <Select
+                        options={sorts}
+                        className={classes.select}
+                        onChange={(sort) => selectSort(sortList[sort.value].field, sortList[sort.value].order)}
+                        defaultValue={sorts[0]}
+                        isClearable={false}
+                    />
+                </div>
             </div>
         )
     }
@@ -75,6 +92,7 @@ MainDrawer.propTypes = {
     classes: PropTypes.object.isRequired,
     filters: PropTypes.object.isRequired,
     selectLanguage: PropTypes.func.isRequired,
+    selectSort: PropTypes.func.isRequired,
     toggleLabel: PropTypes.func.isRequired
 };
 
