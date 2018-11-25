@@ -9,10 +9,24 @@ import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
 import Moment from 'react-moment';
+import CommentsIcon from '@material-ui/icons/Comment';
 
 const styles = theme => ({
     card: {
         marginBottom: theme.spacing.unit * 3
+    },
+
+    cardContentArea: {
+        display: 'flex'
+    },
+
+    cardContent: {
+        flexGrow: 1
+    },
+
+    cardComments: {
+        textAlign: 'center',
+        padding: theme.spacing.unit * 3
     },
 
     chip: {
@@ -44,8 +58,8 @@ const invertColor = (color) => {
 function IssueCard({ classes, issue }) {
     return (
         <Card className={classes.card}>
-            <CardActionArea href={formatRepositoryUrl(issue.url)} target="_blank">
-                <CardContent>
+            <CardActionArea className={classes.cardContentArea} href={formatRepositoryUrl(issue.url)} target="_blank">
+                <CardContent className={classes.cardContent}>
                     <Typography variant="h6">
                         {repoName(issue.repository_url)}: {repoName(issue.title)}
                     </Typography>
@@ -59,6 +73,13 @@ function IssueCard({ classes, issue }) {
                         }} className={classes.chip} />
                     ))}
                 </CardContent>
+
+                <div className={classes.cardComments}>
+                    <CommentsIcon />
+                    <Typography variant="h6">
+                        {issue.comments}
+                    </Typography>
+                </div>
             </CardActionArea>
             <CardActions>
                 <Button size="small" color="primary" href={formatRepositoryUrl(issue.repository_url)} target="_blank">
